@@ -1,0 +1,16 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "no-loops", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "no-console": 1, //setear Error (2), evitar console logs!
+    "no-loops/no-loops": 2,
+    "prettier/prettier": 2 //las reglas de prettier sobreescriben a las de eslint
+  }
+}
