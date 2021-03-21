@@ -24,8 +24,10 @@
 #    and best practices on handling the access key credentials.
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - master
+  workflow_dispatch:
 
 name: Deploy to Amazon ECS
 
@@ -38,6 +40,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Build, Quality and Test
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: npm run build
+      - run: npm run lint
+      - run: npm run test
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
