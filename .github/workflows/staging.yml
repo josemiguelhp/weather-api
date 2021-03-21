@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+
+name: Run quality and tests
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install Project Dependencies
+        run: npm install
+      - name: Build Project
+        run: npm run build
+      - name: Quality
+        run: npm run lint
+      - name: Tests
+        run: npm run test
