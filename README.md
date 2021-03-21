@@ -41,3 +41,10 @@ Se configuro un pipeline de github actions para que en ambientes previos cuando 
 ## Usage
 
 Para obtener la ciudad actual del cliente que hizo un request puede usar `/v1/location`, para obtener informacion respecto al clima de una ciudad en especifico `/v1/current/{city}` donde city es opcional si no se usara la ubicacion del cliente que hizo el request, para obtener el pronostico del tiempo en los proximos 5 dias puede utilizar `/v1/forecast` donde city es opcional si no se usara la ubicacion del cliente que hizo el request.
+
+La app esta desplegada en: <http://weather-api-alb-192873902.sa-east-1.elb.amazonaws.com>
+
+request de ejemplos:
+<http://weather-api-alb-192873902.sa-east-1.elb.amazonaws.com/v1/location>
+<http://weather-api-alb-192873902.sa-east-1.elb.amazonaws.com/v1/current/rosario>
+<http://weather-api-alb-192873902.sa-east-1.elb.amazonaws.com/v1/forecast/cordoba>
