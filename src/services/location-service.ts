@@ -14,8 +14,10 @@ export class LocationService implements ILocationService {
     this.httpRequest.setHeader({ 'Content-Type': 'application/json' })
     this.geLocationWithIP = this.geLocationWithIP.bind(this)
     this.geCurrentWeatherWithLocation = this.geCurrentWeatherWithLocation.bind(this)
+    this.geForecastWithLocation = this.geForecastWithLocation.bind(this)
     this.getLocation = this.getLocation.bind(this)
     this.getCurrentLocation = this.getCurrentLocation.bind(this)
+    this.getForecast = this.getForecast.bind(this)
   }
 
   private async geLocationWithIP(ip: string | undefined) {
@@ -35,7 +37,19 @@ export class LocationService implements ILocationService {
   private async geCurrentWeatherWithLocation(location: string | undefined) {
     if (!location) throw new Error('location is not comming in params')
     this.httpRequest.setUrl(weatherApi.url)
-    this.httpRequest.setPath(`?q=${location}&appid=${weatherApi.key}`)
+    this.httpRequest.setPath(`/weather?q=${location}&appid=${weatherApi.key}`)
+    try {
+      const response = await this.httpRequest.get()
+      return response
+    } catch (error) {
+      throw new ResourceNotFound(location, error.message)
+    }
+  }
+
+  private async geForecastWithLocation(location: string | undefined) {
+    if (!location) throw new Error('location is not comming in params')
+    this.httpRequest.setUrl(weatherApi.url)
+    this.httpRequest.setPath(`/forecast?q=${location}&appid=${weatherApi.key}`)
     try {
       const response = await this.httpRequest.get()
       return response
@@ -62,6 +76,25 @@ export class LocationService implements ILocationService {
         return response
       } else {
         const response = await this.geCurrentWeatherWithLocation(city)
+        return response
+      }
+    } catch (err) {
+      if (err instanceof ResourceNotFound) {
+        throw err
+      }
+      this.log.error(err)
+      throw new ServiceError('ERROR_FROM_GET_LOCATION_SERVICE')
+    }
+  }
+
+  public async getForecast(ip: string | undefined, city: string | undefined) {
+    try {
+      if (!city) {
+        const ipCity = await this.geLocationWithIP(ip)
+        const response = await this.geForecastWithLocation(ipCity)
+        return response
+      } else {
+        const response = await this.geForecastWithLocation(city)
         return response
       }
     } catch (err) {

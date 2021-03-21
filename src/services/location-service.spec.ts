@@ -49,4 +49,25 @@ describe('PostConvertHandler', () => {
       expect(error).toBeInstanceOf(ResourceNotFound)
     }
   })
+  it('test service (get Forecast)', async () => {
+    jest.spyOn(HttpRequest.prototype, 'get').mockImplementation(async () => {
+      return { weatherInfo5Days: '...' }
+    })
+    const httpRequest = new HttpRequest(axios, log)
+    const locationService = new LocationService(httpRequest, log)
+    const res = await locationService.getForecast('24.48.0.1', 'Buenos Aires')
+    expect(res.weatherInfo5Days).toBe('...')
+  })
+  it('test service forecast (dont exists)', async () => {
+    jest.spyOn(HttpRequest.prototype, 'get').mockImplementation(async () => {
+      throw new Error()
+    })
+    const httpRequest = new HttpRequest(axios, log)
+    const locationService = new LocationService(httpRequest, log)
+    try {
+      await locationService.getForecast('24.48.0.1', 'Ciudad Namekusein')
+    } catch (error) {
+      expect(error).toBeInstanceOf(ResourceNotFound)
+    }
+  })
 })

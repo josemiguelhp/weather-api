@@ -11,6 +11,7 @@ export class GetWeatherHandler implements IGetWeatherHandler {
     this.locationService = locationService
     this.getLocation = this.getLocation.bind(this)
     this.getCurrent = this.getCurrent.bind(this)
+    this.getForecast = this.getForecast.bind(this)
   }
 
   public async getLocation(req: Request, res: Response) {
@@ -25,6 +26,14 @@ export class GetWeatherHandler implements IGetWeatherHandler {
     const { clientIp } = req
     const city = req.params.city
     const response = await this.locationService.getCurrentLocation(clientIp, city)
+    return res.status(STATUS_CODE.OK).send(response)
+  }
+
+  public async getForecast(req: Request, res: Response) {
+    this.log.info(`Incoming Request: ${req.clientIp}`)
+    const { clientIp } = req
+    const city = req.params.city
+    const response = await this.locationService.getForecast(clientIp, city)
     return res.status(STATUS_CODE.OK).send(response)
   }
 }

@@ -16,6 +16,6 @@ export const ipApi = {
 }
 
 export const weatherApi = {
-  url: process.env.WEATHER_API_URL || '',
-  key: process.env.WEATHER_API_KEY || ''
+  url: process.env.WEATHER_API_URL || 'http://api.openweathermap.org/data/2.5',
+  key: process.env.WEATHER_API_KEY || '1cded7debd45aa5bcd0979a4e7cec41b' //This could be broken.. https://openweathermap.org/
 }
