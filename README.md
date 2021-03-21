@@ -34,6 +34,10 @@ para debuggear la aplicacion en visual studio utilize el siguiente launch.json c
 
 para levantar la imagen docker puede usar `chmod 777 ./dockerRun.sh && ./dockerRun.sh`
 
+## CI/CD
+
+Se configuro un pipeline de github actions para que en ambientes previos cuando se pushee codigo nuevo se corran los steps de quality y tests, para produccion se corren los mismos steps, se buildea la imagen y se deploya en AWS.
+
 ## Usage
 
 Para obtener la ciudad actual del cliente que hizo un request puede usar `/v1/location`, para obtener informacion respecto al clima de una ciudad en especifico `/v1/current/{city}` donde city es opcional si no se usara la ubicacion del cliente que hizo el request, para obtener el pronostico del tiempo en los proximos 5 dias puede utilizar `/v1/forecast` donde city es opcional si no se usara la ubicacion del cliente que hizo el request.
