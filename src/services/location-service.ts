@@ -1,6 +1,8 @@
 import { ILocationService } from '../../@types/services'
-import { IHttpRequest } from '../utils/http/http-request'
+import { IHttpRequest } from '../../@types/utils'
+import { ipApi } from '../config/default'
 import { ServiceError } from '../utils/errors/errors'
+var isLocal = require('is-localhost')
 
 export class LocationService implements ILocationService {
   private httpRequest: IHttpRequest
@@ -12,13 +14,21 @@ export class LocationService implements ILocationService {
     this.httpRequest.setHeader({ 'Content-Type': 'application/json' })
   }
 
-  public async getLocation() {
+  public async getLocation(ip: string | undefined) {
     try {
-      /*this.log.info('Body: ' + JSON.stringify(body))
-      return response*/
-      return { location: 2 }
+      if (!ip) throw new Error('ip is not comming in params')
+      if (isLocal(ip)) {
+        this.httpRequest.setPath(`${ipApi.path}`)
+        this.log.info('ip obtained is a localhost')
+      } else {
+        this.httpRequest.setPath(`${ipApi.path}/${ip}`)
+      }
+      this.httpRequest.setUrl(ipApi.url)
+      const response = await this.httpRequest.get()
+      return response
     } catch (err) {
-      throw new ServiceError('ERROR_FROM_POST_TRANSPORTER_SERVICE')
+      this.log.error(err)
+      throw new ServiceError('ERROR_FROM_GET_LOCATION_SERVICE')
     }
   }
 }

@@ -1,3 +1,4 @@
+import { IHttpRequest } from '../../../@types/utils'
 import { HttpRequestError } from '../errors/errors'
 
 export class HttpRequest implements IHttpRequest {
@@ -43,7 +44,7 @@ export class HttpRequest implements IHttpRequest {
 
       return response.data
     } catch (error) {
-      console.log('AXIOS:', error)
+      this.log.error('AXIOS:', error)
       throw new HttpRequestError()
     }
   }
@@ -59,17 +60,23 @@ export class HttpRequest implements IHttpRequest {
 
       return response.data
     } catch (error) {
-      console.log('AXIOS:', error)
+      this.log.error('AXIOS:', error)
       throw new HttpRequestError()
     }
   }
-}
+  public async get() {
+    try {
+      const response = await this.axios({
+        method: 'GET',
+        url: this.url + this.path,
+        data: this.payload,
+        headers: this.header
+      })
 
-export interface IHttpRequest {
-  setUrl(url: string): void
-  setBody(body: any): void
-  setPath(path: string): void
-  setHeader(header: any): void
-  post(): any
-  patch(): any
+      return response.data
+    } catch (error) {
+      this.log.error('AXIOS:', error)
+      throw new HttpRequestError()
+    }
+  }
 }

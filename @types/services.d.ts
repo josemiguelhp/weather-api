@@ -1,3 +1,3 @@
 export interface ILocationService {
-  getLocation(): any
+  getLocation(ip: string | undefined): any
 }

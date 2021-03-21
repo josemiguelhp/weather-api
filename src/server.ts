@@ -1,10 +1,9 @@
 import express from 'express'
-import bodyParser from 'body-parser'
-import helmet from 'helmet'
 import { config } from './config/default'
 import { STATUS_CODE } from './utils/globals'
 import { errorHandler } from './utils/errors/error-handler'
 import { IWheatherRouter } from '../@types/express-custom'
+import { setMiddlewares } from './middlewares'
 
 class Server {
   public app: express.Application
@@ -16,13 +15,16 @@ class Server {
     this.port = config.server.port
     this.basePath = config.server.basePath ? config.server.basePath : ''
     this.router = router
+    setMiddlewares(this.app)
     this.routes()
     this.config()
   }
 
+  public config(): void {
+    this.app.set('port', this.port)
+  }
+
   public routes(): void {
-    this.app.use(bodyParser.json())
-    this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use('/health', (req, res, next) => res.status(200).json({ status: 'OK' }))
     this.app.use(this.basePath, this.router.getRouter())
     // Error Hanldler
@@ -30,11 +32,6 @@ class Server {
     this.app.use((req, res) => {
       res.status(STATUS_CODE.NOT_FOUND).json([{ code: 'NOT_FOUND', description: 'Resource not found' }])
     })
-  }
-
-  public config(): void {
-    this.app.use(helmet())
-    this.app.set('port', this.port)
   }
 
   public start(): void {
