@@ -31,3 +31,9 @@ para debuggear la aplicacion en visual studio utilize el siguiente launch.json c
   ]
 }
 ```
+
+para levantar la imagen docker puede usar `chmod 777 ./dockerRun.sh && ./dockerRun.sh`
+
+## Usage
+
+Para obtener la ciudad actual del cliente que hizo un request puede usar `/v1/location`, para obtener informacion respecto al clima de una ciudad en especifico `/v1/current/{city}` donde city es opcional si no se usara la ubicacion del cliente que hizo el request, para obtener el pronostico del tiempo en los proximos 5 dias puede utilizar `/v1/forecast` donde city es opcional si no se usara la ubicacion del cliente que hizo el request.
