@@ -2,7 +2,7 @@ import { ILocationService } from '../../@types/services'
 import { IHttpRequest } from '../../@types/utils'
 import { ipApi, weatherApi } from '../config/default'
 import { ServiceError, ResourceNotFound } from '../utils/errors/errors'
-import isLocal from 'is-localhost'
+import isLocal from 'is-localhost-ip'
 
 export class LocationService implements ILocationService {
   private httpRequest: IHttpRequest
@@ -22,7 +22,7 @@ export class LocationService implements ILocationService {
 
   private async geLocationWithIP(ip: string | undefined) {
     if (!ip) throw new Error('ip is not comming in params')
-    if (isLocal(ip)) {
+    if (await isLocal(ip)) {
       this.httpRequest.setPath(`${ipApi.path}`)
       this.log.info('ip obtained is a localhost')
     } else {
