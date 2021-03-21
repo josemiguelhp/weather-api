@@ -3,8 +3,8 @@ import { log } from '../logger'
 import axios, { AxiosStatic } from 'axios'
 
 interface AxiosMock extends AxiosStatic {
-  mockResolvedValue: Function
-  mockRejectedValue: Function
+  mockResolvedValue(arg: any): any
+  mockRejectedValue(arg: any): any
 }
 jest.mock('axios')
 const mockedAxios = axios as AxiosMock

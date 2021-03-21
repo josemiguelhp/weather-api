@@ -5,8 +5,6 @@ import axios from 'axios'
 import { ResourceNotFound } from '../utils/errors/errors'
 
 describe('PostConvertHandler', () => {
-  beforeAll(() => {})
-
   afterAll(() => {
     jest.restoreAllMocks()
   })

@@ -2,7 +2,7 @@ import { ILocationService } from '../../@types/services'
 import { IHttpRequest } from '../../@types/utils'
 import { ipApi, weatherApi } from '../config/default'
 import { ServiceError, ResourceNotFound } from '../utils/errors/errors'
-var isLocal = require('is-localhost')
+import isLocal from 'is-localhost'
 
 export class LocationService implements ILocationService {
   private httpRequest: IHttpRequest

@@ -6,7 +6,7 @@ import { log } from '../logger'
  * and unhandledRejection on main process
  */
 
-export const httpError = (reply: any) => (httpStatus: number = 500, error: any = 'Internal server Error') =>
+export const httpError = (reply: any) => (httpStatus = 500, error: any = 'Internal server Error') =>
   reply.status(httpStatus).send({
     code: STATUS_CODES[httpStatus],
     message: error.message,
