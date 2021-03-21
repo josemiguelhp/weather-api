@@ -15,6 +15,7 @@ export class WeatherRouter implements IWheatherRouter {
 
   public routes(): void {
     this.router.get('/location', asyncWrapper(this.getWeatherHandler.getLocation))
+    this.router.get('/current/:city?', asyncWrapper(this.getWeatherHandler.getCurrent))
   }
   public getRouter(): Router {
     return this.router

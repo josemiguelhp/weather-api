@@ -14,3 +14,8 @@ export const ipApi = {
   url: process.env.IP_API_URL || 'http://ip-api.com',
   path: process.env.IP_API_PATH || '/json'
 }
+
+export const weatherApi = {
+  url: process.env.WEATHER_API_URL || '',
+  key: process.env.WEATHER_API_KEY || ''
+}

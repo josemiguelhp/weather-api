@@ -5,10 +5,13 @@ import { HttpRequest } from '../utils/http/http-request'
 import { LocationService } from '../services/location-service'
 import axios from 'axios'
 
-describe('PostConvertHandler', () => {
+describe('GetWeatherHandler', () => {
   beforeAll(() => {
     jest.spyOn(LocationService.prototype, 'getLocation').mockImplementation(async () => {
-      return { location: 2 }
+      return { city: 'Dublin' }
+    })
+    jest.spyOn(LocationService.prototype, 'getCurrentLocation').mockImplementation(async () => {
+      return { weatherInfo: '...' }
     })
   })
 
@@ -26,5 +29,21 @@ describe('PostConvertHandler', () => {
     await getWeatherHandler.getLocation(req, res)
     expect(res.status).toHaveBeenCalledWith(200)
     expect(LocationService.prototype.getLocation).toBeCalledTimes(1)
+  })
+
+  it('test controller (get Current)', async () => {
+    const req = getMockReq({
+      clientIp: '::1',
+      params: {
+        city: 'Narnia'
+      }
+    })
+    const { res } = getMockRes()
+    const httpRequest = new HttpRequest(axios, log)
+    const locationService = new LocationService(httpRequest, log)
+    const getWeatherHandler = new GetWeatherHandler(locationService, log)
+    await getWeatherHandler.getCurrent(req, res)
+    expect(res.status).toHaveBeenCalledWith(200)
+    expect(LocationService.prototype.getCurrentLocation).toBeCalledTimes(1)
   })
 })

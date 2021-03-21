@@ -15,10 +15,10 @@ export class ServiceError extends HandledError {
   }
 }
 
-export class AjvError extends HandledError {
-  private validation: any
-  constructor(validation: any, message: string) {
+export class ResourceNotFound extends HandledError {
+  private resource: any
+  constructor(resource: any, message: string) {
     super(message)
-    this.validation = validation
+    this.resource = resource
   }
 }

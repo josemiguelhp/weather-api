@@ -1,5 +1,5 @@
 import { STATUS_CODES } from 'http'
-import { AjvError, ServiceError } from './errors'
+import { ResourceNotFound, ServiceError } from './errors'
 import { log } from '../logger'
 
 /**Error Handler for uncaughtException
@@ -17,14 +17,11 @@ export const errorHandler = function (error: any, req: any, response: any, next:
   const isError = true
   const replyError = httpError(response)
   switch (isError) {
-    case error instanceof AjvError:
+    case error instanceof ResourceNotFound:
       log.warn(error)
-      return replyError(400, {
-        message: 'validation error',
-        errors: error.validation.map((e: any) => ({
-          code: e.keyword,
-          message: e.message
-        }))
+      return replyError(404, {
+        message: error.message,
+        resource: error.resource
       })
     case error instanceof ServiceError:
       log.warn(error)
