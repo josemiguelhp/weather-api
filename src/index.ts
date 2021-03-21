@@ -1,11 +1,9 @@
-import express from 'express';
+process.env.NODE_CONFIG_DIR = './config'
 
-const app = express();
-const port = 3000;
+import { Server } from './server'
+import { weatherRoute } from './routes/'
+import * as dotenv from 'dotenv'
 
-app.get('/', (req, res) => {
-  res.send('Hola mundo!');
-});
-app.listen(port, () => {
-  return console.log(`server is listening on ${port}`);
-});
+dotenv.config()
+const server: Server = new Server(weatherRoute)
+server.start()
