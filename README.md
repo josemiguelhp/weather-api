@@ -40,7 +40,7 @@ Se configuro un pipeline de github actions para que en ambientes previos cuando 
 
 ## Infrastructure
 
-Se uso AWS para hostear la aplicaion, principalmente por motivos de aprendizaje, use AMmazon ECR para hostear las imagenes docker de la aplicacion, y luego deployo con Amazon ECS con la modalidad AWS Fargate, tambien se configuro un balanceador de carga ALB.
+Se uso AWS para hostear la aplicacion, principalmente por motivos de aprendizaje, se uso ECR como registry de imagenes docker de la API, y luego deployo con AWS Fargate en ECS, tambien se configuro un balanceador de cargas.
 
 ## Usage
 
