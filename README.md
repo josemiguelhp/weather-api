@@ -40,7 +40,7 @@ Se configuro un pipeline de github actions para que en ambientes previos cuando 
 
 ## Infrastructure
 
-Se uso AWS para hostear la aplicion, principalmente por motivos de aprendizaje, use AMmazon ECR para hostear las imagenes docker de la aplicacion, y luego deployo con Amazon ECS con la modalidad AWS Fargate, tambien se configuro un balanceador de carga ALB.
+Se uso AWS para hostear la aplicaion, principalmente por motivos de aprendizaje, use AMmazon ECR para hostear las imagenes docker de la aplicacion, y luego deployo con Amazon ECS con la modalidad AWS Fargate, tambien se configuro un balanceador de carga ALB.
 
 ## Usage
 
@@ -50,14 +50,14 @@ La app esta desplegada en: <http://weather-api-alb-192873902.sa-east-1.elb.amazo
 
 request de ejemplos:
 
-# /v1/location
+### /v1/location
 
 <http://weather-api-alb-192873902.sa-east-1.elb.amazonaws.com/v1/location>
 
-# /v1/current/{city}
+### /v1/current/{city}
 
 <http://weather-api-alb-192873902.sa-east-1.elb.amazonaws.com/v1/current/rosario>
 
-# /v1/forecast
+### /v1/forecast
 
 <http://weather-api-alb-192873902.sa-east-1.elb.amazonaws.com/v1/forecast/cordoba>
