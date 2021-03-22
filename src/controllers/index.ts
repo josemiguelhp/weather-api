@@ -2,6 +2,6 @@ import { log } from '../utils/logger'
 
 import { GetWeatherHandler } from './get-weather'
 
-import { converterService } from '../services'
+import { locationService } from '../services'
 
-export const getWeatherHandler = new GetWeatherHandler(converterService, log)
+export const getWeatherHandler = new GetWeatherHandler(locationService, log)
